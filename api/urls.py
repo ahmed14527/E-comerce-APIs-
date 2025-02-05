@@ -4,6 +4,8 @@ from . import views
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 
+from .views import OrderViewSet
+
 
 router = routers.DefaultRouter()
 
@@ -26,7 +28,9 @@ cart_router.register("items", views.CartItemViewSet, basename="cart-items")
 urlpatterns = [
     path("", include(router.urls)),
     path("", include(product_router.urls)),
-    path("", include(cart_router.urls))
+    path("", include(cart_router.urls)),
+    path('orders/<int:pk>/success-payment/', OrderViewSet.as_view({'get': 'success_payment'}), name='orders-success-payment'),
+
     # path("products", views.ApiProducts.as_view()),
     # path("products/<str:pk>", views.ApiProduct.as_view()),
     # path("categories", views.APICategories.as_view()),
